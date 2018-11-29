@@ -25,6 +25,10 @@ namespace Chapter8Basis
             item.cost = 40;
             //Console.WriteLine(item.ToString());
 
+            ItemController sep = CreateSeparateServices();
+            sep.CreateItem(item);
+            sep.DeleteItem(item);
+
             Console.WriteLine("=========CreateSeparateServices=========");
             OrderController sep = CreateSeparateServices();
             sep.CreateOrder(ord);
@@ -41,6 +45,14 @@ namespace Chapter8Basis
 
             Console.WriteLine("Hit any key to quit");
             Console.ReadKey();
+        }
+
+        static ItemController CreateSeparateService()
+        {
+            var reader = new Reader<Item>();
+            var saver = new Saver<Item>();
+            var deleter = new Deleter<Item>();
+            return new ItemController(reader, saver, deleter);
         }
 
         static OrderController CreateSeparateServices()
